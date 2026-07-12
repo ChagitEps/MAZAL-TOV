@@ -12,10 +12,13 @@ export type FieldType = "text" | "textarea" | "date" | "select";
  * - "opening"   — small line at the top (e.g. בס"ד)
  * - "body"      — the invitation wording paragraph
  * - "name"      — celebrant name(s), large in the accent color
- * - "detail"    — date/time/venue lines (value printed with `prefix`, no label)
+ * - "detail"    — date/time/venue lines (value printed with `prefix`, no label);
+ *                 in the "document" variant, details join into one contact line
  * - "signature" — closing block at the bottom (נשמח לראותכם, הורים, סבים)
+ * - "section"   — document-variant section: the field's LABEL prints as the
+ *                 section heading (accent color) with the content beneath it
  */
-export type FieldRole = "opening" | "body" | "name" | "detail" | "signature";
+export type FieldRole = "opening" | "body" | "name" | "detail" | "signature" | "section";
 
 export interface TemplateField {
   /** Stable key stored in documents.content[key]. */
@@ -59,6 +62,12 @@ export interface TemplateLayout {
   /** Page size for the PDF (spec §12): A5 for invitations, A4 for CVs. */
   pageSize: "A5" | "A4";
   orientation: "portrait" | "landscape";
+  /**
+   * Overall composition (spec §6 categories):
+   * - "invitation" (default) — centered, framed, spread top-to-bottom
+   * - "document"             — start-aligned professional flow (CV, letters)
+   */
+  variant?: "invitation" | "document";
 }
 
 export interface TemplateSchema {

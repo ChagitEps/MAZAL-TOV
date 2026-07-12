@@ -5,12 +5,22 @@ import { formatAgorot } from "@/lib/utils";
 
 export const metadata = { title: "בחירת מסמך | מזל טוב AI" };
 
+// Launch categories (spec §6) — display order matters: events first, then work.
+const CATEGORIES: { slug: string; title: string }[] = [
+  { slug: "events", title: "אירועים" },
+  { slug: "work", title: "עבודה" },
+];
+
 // Catalog page (spec §3 step 1) — Server Component, templates from the query layer.
 // Each card shows the template's thumbnail (user-provided image in
 // public/templates/<slug>.jpg); until one exists, a soft gradient placeholder
 // derived from the template's first color set keeps the catalog polished.
 export default async function CreatePage() {
   const templates = await getAllTemplates();
+  const groups = CATEGORIES.map((c) => ({
+    ...c,
+    templates: templates.filter((t) => t.categoryId === c.slug),
+  })).filter((g) => g.templates.length > 0);
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-12">
@@ -24,8 +34,11 @@ export default async function CreatePage() {
         </Link>
       </p>
 
-      <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {templates.map((t) => {
+      {groups.map((group) => (
+        <section key={group.slug} className="mt-10">
+          <h2 className="text-xl font-bold">{group.title}</h2>
+          <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {group.templates.map((t) => {
           const cs = t.schema.colorSets[0];
           return (
             <Link
@@ -70,7 +83,9 @@ export default async function CreatePage() {
             </Link>
           );
         })}
-      </div>
+          </div>
+        </section>
+      ))}
     </main>
   );
 }

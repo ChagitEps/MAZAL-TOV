@@ -1,0 +1,43 @@
+{
+  "slug": "cover-letter",
+  "title": "מכתב מקדים",
+  "description": "מכתב מקדים מקצועי המצורף לקורות החיים — פנייה אישית וממוקדת למשרה, מוכן לשליחה כ-PDF.",
+  "category_slug": "work",
+  "base_price_agorot": 3900,
+  "schema": {
+    "layout": { "pageSize": "A4", "orientation": "portrait", "variant": "document" },
+    "colorSets": [
+      { "key": "slate",  "label": "אפור מקצועי", "bg": "#ffffff", "fg": "#26303a", "accent": "#3d5568" },
+      { "key": "navy",   "label": "כחול עסקי",   "bg": "#ffffff", "fg": "#1d2b3f", "accent": "#1f4e79" },
+      { "key": "plum",   "label": "סגול עדין",   "bg": "#ffffff", "fg": "#332638", "accent": "#6a4a78" },
+      { "key": "teal",   "label": "ירקרק רגוע",  "bg": "#ffffff", "fg": "#1f3634", "accent": "#2e6b62" }
+    ],
+    "fields": [
+      { "key": "blessing", "label": "פתיחה (בס\"ד — לא חובה)", "type": "text", "role": "opening",
+        "maxLength": 20, "aiEnabled": false },
+
+      { "key": "name", "label": "שם מלא", "type": "text", "role": "name",
+        "required": true, "placeholder": "שרה כהן", "maxLength": 50, "aiEnabled": false },
+
+      { "key": "phone", "label": "טלפון", "type": "text", "role": "detail",
+        "required": true, "placeholder": "050-1234567", "maxLength": 20, "aiEnabled": false },
+
+      { "key": "email", "label": "דוא\"ל", "type": "text", "role": "detail",
+        "placeholder": "sara@gmail.com", "maxLength": 60, "aiEnabled": false },
+
+      { "key": "recipient", "label": "לכבוד (חברה / מגייס/ת)", "type": "text", "role": "detail",
+        "prefix": "לכבוד: ", "required": true, "placeholder": "חברת \"רפואה פלוס\", מחלקת גיוס", "maxLength": 80, "aiEnabled": false },
+
+      { "key": "subject", "label": "הנדון", "type": "text", "role": "section",
+        "required": true, "placeholder": "מועמדות למשרת מזכירה רפואית (משרה מס' 123)", "maxLength": 100, "aiEnabled": true },
+
+      { "key": "body", "label": "גוף המכתב", "type": "textarea", "role": "section",
+        "required": true,
+        "placeholder": "שלום רב,\n\nאני מבקשת להגיש את מועמדותי למשרת המזכירה הרפואית שפורסמה. במסגרת תפקידי הנוכחי אני מנהלת יומן של ארבעה רופאים...\n\nאשמח להיפגש ולהרחיב.\nבברכה,",
+        "maxLength": 1500, "aiEnabled": true },
+
+      { "key": "signature", "label": "חתימה", "type": "text", "role": "signature",
+        "emphasis": true, "required": true, "placeholder": "שרה כהן", "maxLength": 50, "aiEnabled": false }
+    ]
+  }
+}

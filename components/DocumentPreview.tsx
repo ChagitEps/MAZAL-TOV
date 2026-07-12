@@ -60,6 +60,92 @@ const PAGE_MM = {
   A4: { w: 210, h: 297 },
 } as const;
 
+/** Document variant (CV, letters): start-aligned professional flow — spec §6. */
+function DocumentVariant({ schema, values, colorSet }: Omit<PreviewProps, "print">) {
+  const fields = schema.fields.filter((f) => printable(f, values));
+  const role = (f: TemplateField) => f.role ?? "detail";
+
+  // Consecutive details merge into one "phone · email · city" contact line.
+  const blocks: (TemplateField | TemplateField[])[] = [];
+  for (const f of fields) {
+    const last = blocks[blocks.length - 1];
+    if (role(f) === "detail" && Array.isArray(last)) last.push(f);
+    else if (role(f) === "detail") blocks.push([f]);
+    else blocks.push(f);
+  }
+
+  return (
+    <div className="flex h-full flex-col gap-4 p-[8%] text-start">
+      {blocks.map((block) => {
+        if (Array.isArray(block)) {
+          return (
+            <div key={block[0].key} className="text-sm opacity-85">
+              {block.map((f, i) => (
+                <span key={f.key}>
+                  {i > 0 && <span className="mx-2 opacity-60">·</span>}
+                  {f.prefix}
+                  {rawValue(f, values)}
+                </span>
+              ))}
+            </div>
+          );
+        }
+        const f = block;
+        const v = rawValue(f, values);
+        switch (role(f)) {
+          case "opening":
+            return (
+              <div key={f.key} className="text-xs opacity-70">
+                {v}
+              </div>
+            );
+          case "name":
+            return (
+              <h1
+                key={f.key}
+                className="text-3xl font-bold leading-tight"
+                style={{ color: colorSet.accent }}
+              >
+                {v}
+              </h1>
+            );
+          case "body":
+            return (
+              <p key={f.key} className="-mt-2 whitespace-pre-line text-base">
+                {v}
+              </p>
+            );
+          case "section":
+            return (
+              <section key={f.key}>
+                <h2
+                  className="mb-1 border-b pb-1 text-sm font-bold"
+                  style={{ color: colorSet.accent, borderColor: `${colorSet.accent}66` }}
+                >
+                  {f.label}
+                </h2>
+                <div className="whitespace-pre-line text-sm leading-relaxed">{v}</div>
+              </section>
+            );
+          default: // signature
+            return (
+              <div
+                key={f.key}
+                className={
+                  (f.emphasis ? "font-semibold " : "opacity-85 ") +
+                  "mt-auto whitespace-pre-line text-sm"
+                }
+              >
+                {f.prefix}
+                {v}
+              </div>
+            );
+        }
+      })}
+    </div>
+  );
+}
+
 export function DocumentPreview({ schema, values, colorSet, print }: PreviewProps) {
   const fields = schema.fields.filter((f) => printable(f, values));
   const role = (f: TemplateField) => f.role ?? "detail";
@@ -152,6 +238,22 @@ export function DocumentPreview({ schema, values, colorSet, print }: PreviewProp
         </div>
       );
     });
+
+  if (schema.layout.variant === "document") {
+    return (
+      <div
+        dir="rtl"
+        className={
+          print
+            ? "overflow-hidden"
+            : "mx-auto w-full max-w-md overflow-hidden rounded-sm shadow-lg"
+        }
+        style={outerStyle}
+      >
+        <DocumentVariant schema={schema} values={values} colorSet={colorSet} />
+      </div>
+    );
+  }
 
   return (
     <div

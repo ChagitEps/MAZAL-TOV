@@ -1,0 +1,52 @@
+{
+  "slug": "cv",
+  "title": "קורות חיים",
+  "description": "קורות חיים מקצועיים בעברית — עיצוב נקי ומסודר, מוכן לשליחה כ-PDF. כולל עדכון חוזר חינם במשך שנה.",
+  "category_slug": "work",
+  "base_price_agorot": 3900,
+  "schema": {
+    "layout": { "pageSize": "A4", "orientation": "portrait", "variant": "document" },
+    "colorSets": [
+      { "key": "slate",  "label": "אפור מקצועי", "bg": "#ffffff", "fg": "#26303a", "accent": "#3d5568" },
+      { "key": "navy",   "label": "כחול עסקי",   "bg": "#ffffff", "fg": "#1d2b3f", "accent": "#1f4e79" },
+      { "key": "plum",   "label": "סגול עדין",   "bg": "#ffffff", "fg": "#332638", "accent": "#6a4a78" },
+      { "key": "teal",   "label": "ירקרק רגוע",  "bg": "#ffffff", "fg": "#1f3634", "accent": "#2e6b62" }
+    ],
+    "fields": [
+      { "key": "blessing", "label": "פתיחה (בס\"ד — לא חובה)", "type": "text", "role": "opening",
+        "maxLength": 20, "aiEnabled": false },
+
+      { "key": "name", "label": "שם מלא", "type": "text", "role": "name",
+        "required": true, "placeholder": "שרה כהן", "maxLength": 50, "aiEnabled": false },
+
+      { "key": "profession", "label": "תפקיד / מקצוע", "type": "text", "role": "body",
+        "placeholder": "מזכירה רפואית · ניהול משרד", "maxLength": 80, "aiEnabled": true },
+
+      { "key": "phone", "label": "טלפון", "type": "text", "role": "detail",
+        "required": true, "placeholder": "050-1234567", "maxLength": 20, "aiEnabled": false },
+
+      { "key": "email", "label": "דוא\"ל", "type": "text", "role": "detail",
+        "placeholder": "sara@gmail.com", "maxLength": 60, "aiEnabled": false },
+
+      { "key": "city", "label": "עיר מגורים", "type": "text", "role": "detail",
+        "placeholder": "ירושלים", "maxLength": 40, "aiEnabled": false },
+
+      { "key": "summary", "label": "תקציר מקצועי", "type": "textarea", "role": "section",
+        "placeholder": "מזכירה רפואית עם 5 שנות ניסיון בניהול יומן רופאים, קבלת קהל ותיאום תורים...",
+        "maxLength": 500, "aiEnabled": true },
+
+      { "key": "experience", "label": "ניסיון תעסוקתי", "type": "textarea", "role": "section",
+        "required": true,
+        "placeholder": "2021–2026 | מזכירה רפואית, מרפאת \"בריאות הצפון\"\n- ניהול יומן של 4 רופאים\n- קבלת קהל ומענה טלפוני\n\n2018–2021 | פקידת קבלה, מכון פיזיותרפיה",
+        "maxLength": 1200, "aiEnabled": true },
+
+      { "key": "education", "label": "השכלה", "type": "textarea", "role": "section",
+        "placeholder": "2017 | תעודת מזכירות רפואית, מכללת הדסה\n2016 | בגרות מלאה, סמינר בית יעקב",
+        "maxLength": 600, "aiEnabled": true },
+
+      { "key": "skills", "label": "כישורים", "type": "textarea", "role": "section",
+        "placeholder": "שליטה מלאה ב-Office · הקלדה עיוורת · עברית ואנגלית · יחסי אנוש מצוינים",
+        "maxLength": 400, "aiEnabled": true }
+    ]
+  }
+}

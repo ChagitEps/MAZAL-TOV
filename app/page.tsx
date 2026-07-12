@@ -57,15 +57,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <footer className="mt-20 border-t pt-6 text-center text-sm text-gray-500">
-        <nav className="flex justify-center gap-4">
-          <Link href="/my-documents" className="hover:underline">המסמכים שלי</Link>
-          <Link href="/about" className="hover:underline">אודות</Link>
-          <Link href="/terms" className="hover:underline">תנאי שימוש</Link>
-          <Link href="/privacy" className="hover:underline">מדיניות פרטיות</Link>
-        </nav>
-        <p className="mt-3">© {new Date().getFullYear()} מזל טוב AI</p>
-      </footer>
     </main>
   );
 }
