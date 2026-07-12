@@ -1,16 +1,17 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { Template } from "@/lib/templates/types";
 import { formatAgorot } from "@/lib/utils";
+import { loadDraft, saveDraft } from "@/lib/drafts";
 import { DynamicForm } from "@/components/DynamicForm";
 import { ColorSetPicker } from "@/components/ColorSetPicker";
 import { DocumentPreview } from "@/components/DocumentPreview";
 
 /**
  * The generator (spec §3): fill the form → the preview updates live, locally —
- * no server round-trip while typing. AI improvements and saving will go through
- * Server Actions in a later phase.
+ * no server round-trip while typing. Work is auto-saved to the device
+ * (localStorage draft per template) until cloud drafts land with Supabase.
  */
 export function GeneratorClient({ template }: { template: Template }) {
   // Initialize values from the template's field defaults (spec §4).
@@ -22,6 +23,30 @@ export function GeneratorClient({ template }: { template: Template }) {
 
   const [values, setValues] = useState<Record<string, string>>(initialValues);
   const [colorKey, setColorKey] = useState(template.schema.colorSets[0].key);
+  const [restored, setRestored] = useState(false); // draft loaded (or none existed)
+
+  // Restore this template's draft once on mount — closing the tab loses nothing.
+  useEffect(() => {
+    const draft = loadDraft(template.slug);
+    if (draft) {
+      setValues((prev) => ({ ...prev, ...draft.values }));
+      if (template.schema.colorSets.some((c) => c.key === draft.colorKey)) {
+        setColorKey(draft.colorKey);
+      }
+    }
+    setRestored(true);
+  }, [template]);
+
+  // Auto-save on every change (after restore, so defaults don't clobber a draft).
+  const skipFirstSave = useRef(true);
+  useEffect(() => {
+    if (!restored) return;
+    if (skipFirstSave.current) {
+      skipFirstSave.current = false;
+      return;
+    }
+    saveDraft({ slug: template.slug, templateTitle: template.title, values, colorKey });
+  }, [restored, values, colorKey, template]);
 
   const colorSet =
     template.schema.colorSets.find((c) => c.key === colorKey) ??
@@ -82,7 +107,10 @@ export function GeneratorClient({ template }: { template: Template }) {
       {/* live preview side — sticky on desktop so it stays visible while typing */}
       <section aria-label="תצוגה מקדימה" className="lg:sticky lg:top-6 lg:self-start">
         <h2 className="text-lg font-semibold">תצוגה מקדימה</h2>
-        <p className="text-xs text-gray-500">כך ייראה ה-PDF שתורידו — אחד לאחד.</p>
+        <p className="text-xs text-gray-500">
+          כך ייראה ה-PDF שתורידו — אחד לאחד.
+          {restored && <span className="ms-2 text-green-700">✓ נשמר אוטומטית במכשיר זה</span>}
+        </p>
         <div className="mt-4">
           <DocumentPreview schema={template.schema} values={values} colorSet={colorSet} />
         </div>
