@@ -1,3 +1,4 @@
+import type { CSSProperties, ReactNode } from "react";
 import type { ColorSet, TemplateField, TemplateSchema } from "@/lib/templates/types";
 import { formatHebrewDate } from "@/lib/hebrewDate";
 
@@ -16,6 +17,9 @@ export interface PreviewProps {
   schema: TemplateSchema;
   values: Record<string, string>;
   colorSet: ColorSet;
+  /** Print mode: exact page dimensions in mm, no screen chrome (shadow/rounding).
+   *  Used by the /print page that Puppeteer rasterizes — spec §12. */
+  print?: boolean;
 }
 
 function rawValue(field: TemplateField, values: Record<string, string>): string {
@@ -45,7 +49,12 @@ function groupRows(fields: TemplateField[]): TemplateField[][] {
   return groups;
 }
 
-export function DocumentPreview({ schema, values, colorSet }: PreviewProps) {
+const PAGE_MM = {
+  A5: { w: 148, h: 210 },
+  A4: { w: 210, h: 297 },
+} as const;
+
+export function DocumentPreview({ schema, values, colorSet, print }: PreviewProps) {
   const fields = schema.fields.filter((f) => printable(f, values));
   const role = (f: TemplateField) => f.role ?? "detail";
 
@@ -54,7 +63,10 @@ export function DocumentPreview({ schema, values, colorSet }: PreviewProps) {
   const middle = fields.filter((f) => role(f) !== "opening" && role(f) !== "signature");
   const firstDetail = middle.find((f) => role(f) === "detail");
 
-  const aspect = schema.layout.pageSize === "A4" ? "210 / 297" : "148 / 210";
+  const page = PAGE_MM[schema.layout.pageSize];
+  const outerStyle: CSSProperties = print
+    ? { width: `${page.w}mm`, height: `${page.h}mm`, background: colorSet.bg, color: colorSet.fg }
+    : { aspectRatio: `${page.w} / ${page.h}`, background: colorSet.bg, color: colorSet.fg };
 
   const renderField = (f: TemplateField) => {
     const v = rawValue(f, values);
@@ -113,7 +125,7 @@ export function DocumentPreview({ schema, values, colorSet }: PreviewProps) {
 
   const renderGroups = (
     list: TemplateField[],
-    render: (f: TemplateField) => React.ReactNode,
+    render: (f: TemplateField) => ReactNode,
   ) =>
     groupRows(list).map((group) =>
       group.length === 1 ? (
@@ -129,8 +141,12 @@ export function DocumentPreview({ schema, values, colorSet }: PreviewProps) {
   return (
     <div
       dir="rtl"
-      className="mx-auto w-full max-w-md overflow-hidden rounded-sm shadow-lg"
-      style={{ aspectRatio: aspect, background: colorSet.bg, color: colorSet.fg }}
+      className={
+        print
+          ? "overflow-hidden"
+          : "mx-auto w-full max-w-md overflow-hidden rounded-sm shadow-lg"
+      }
+      style={outerStyle}
     >
       <div
         className="flex h-full flex-col items-center justify-between p-[6%] text-center"

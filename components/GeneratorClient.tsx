@@ -27,6 +27,11 @@ export function GeneratorClient({ template }: { template: Template }) {
     template.schema.colorSets.find((c) => c.key === colorKey) ??
     template.schema.colorSets[0];
 
+  // Draft-PDF link: current values + palette, URL-encoded for the render route.
+  const draftPdfUrl = `/api/pdf/${template.slug}?d=${encodeURIComponent(
+    JSON.stringify({ values, colorKey }),
+  )}`;
+
   return (
     <div className="grid gap-8 lg:grid-cols-2">
       {/* form side */}
@@ -49,19 +54,28 @@ export function GeneratorClient({ template }: { template: Template }) {
           />
         </div>
 
-        <div className="mt-8 flex items-center justify-between rounded-xl border bg-gray-50 p-4">
+        <div className="mt-8 flex items-center justify-between gap-3 rounded-xl border bg-gray-50 p-4">
           <div>
             <div className="font-semibold">{formatAgorot(template.basePriceAgorot)}</div>
             <div className="text-xs text-gray-500">PDF באיכות דפוס · כולל 3 תיקונים</div>
           </div>
-          <button
-            type="button"
-            disabled
-            title="התשלום יופעל בקרוב"
-            className="rounded-xl bg-brand px-6 py-2 text-brand-fg opacity-50"
-          >
-            לתשלום והורדה (בקרוב)
-          </button>
+          <div className="flex flex-col items-end gap-2">
+            <a
+              href={draftPdfUrl}
+              download
+              className="rounded-xl border border-brand px-5 py-2 text-sm text-brand transition hover:bg-brand hover:text-brand-fg"
+            >
+              הורדת טיוטה (PDF)
+            </a>
+            <button
+              type="button"
+              disabled
+              title="התשלום יופעל בקרוב"
+              className="rounded-xl bg-brand px-5 py-2 text-sm text-brand-fg opacity-50"
+            >
+              לתשלום והורדה (בקרוב)
+            </button>
+          </div>
         </div>
       </section>
 
