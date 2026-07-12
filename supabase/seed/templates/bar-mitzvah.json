@@ -42,12 +42,15 @@
         "emphasis": true, "required": true, "placeholder": "ברק ולינור אלמשעלי", "maxLength": 80, "aiEnabled": false },
 
       { "key": "grandparents_invite", "label": "שורת הזמנת הסבים", "type": "text", "role": "signature",
-        "dependsOn": "grandparents",
+        "dependsOn": "grandparents1,grandparents2",
         "default": "גם אנו מתכבדים להזמינכם להשתתף בשמחת נכדנו היקר",
         "maxLength": 120, "aiEnabled": true },
 
-      { "key": "grandparents", "label": "שמות הסבים והסבתות", "type": "text", "role": "signature",
-        "emphasis": true, "placeholder": "הרב דנין שליט\"א · הג' אילנה קהלני", "maxLength": 120, "aiEnabled": false }
+      { "key": "grandparents1", "label": "סבא וסבתא — צד האבא", "type": "text", "role": "signature",
+        "emphasis": true, "placeholder": "הרב אברהם מצליח ורעייתו", "maxLength": 80, "aiEnabled": false },
+
+      { "key": "grandparents2", "label": "סבא וסבתא — צד האמא", "type": "text", "role": "signature",
+        "emphasis": true, "placeholder": "הרב ישעיהו מיכאלי ורעייתו", "maxLength": 80, "aiEnabled": false }
     ]
   }
 }

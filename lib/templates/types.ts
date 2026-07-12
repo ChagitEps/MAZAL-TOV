@@ -39,7 +39,8 @@ export interface TemplateField {
   row?: string;
   /** Bold/enlarged on the document (e.g. parents' names in the signature). */
   emphasis?: boolean;
-  /** Print this field only when the referenced field has a value. */
+  /** Print this field only when a referenced field has a value.
+   *  Comma-separated keys allowed — any one of them filled is enough. */
   dependsOn?: string;
   /** Whether the AI Writer may act on this field. */
   aiEnabled?: boolean;

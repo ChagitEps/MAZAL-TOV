@@ -31,10 +31,16 @@ function rawValue(field: TemplateField, values: Record<string, string>): string 
   return v;
 }
 
-/** A field prints only if it has a value and its dependsOn (if any) is satisfied. */
+/** A field prints only if it has a value and its dependsOn (if any) is satisfied.
+ *  dependsOn accepts comma-separated keys — satisfied when ANY of them has a value. */
 function printable(field: TemplateField, values: Record<string, string>): boolean {
   if (!rawValue(field, values)) return false;
-  if (field.dependsOn && !(values[field.dependsOn] ?? "").trim()) return false;
+  if (field.dependsOn) {
+    const anyFilled = field.dependsOn
+      .split(",")
+      .some((key) => (values[key.trim()] ?? "").trim());
+    if (!anyFilled) return false;
+  }
   return true;
 }
 
