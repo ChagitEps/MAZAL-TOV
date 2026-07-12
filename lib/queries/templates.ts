@@ -21,6 +21,8 @@ interface SeedTemplate {
   description?: string;
   category_slug: string;
   base_price_agorot: number;
+  /** Public path of the catalog-card image, e.g. "/templates/wedding.jpg". */
+  thumbnail?: string;
   schema: TemplateSchema;
 }
 
@@ -42,6 +44,7 @@ async function loadAll(): Promise<Template[]> {
         slug: raw.slug,
         title: raw.title,
         description: raw.description ?? null,
+        thumbnail: raw.thumbnail ?? null,
         schema: raw.schema,
         basePriceAgorot: raw.base_price_agorot,
         isActive: true,

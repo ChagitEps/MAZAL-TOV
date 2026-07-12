@@ -1,0 +1,45 @@
+{
+  "slug": "shalom-zachar",
+  "title": "הזמנה לשלום זכר",
+  "description": "הזמנה מעוצבת לשלום זכר בליל שבת — פרשת השבוע, תאריך עברי ופרטי הבית המארח.",
+  "category_slug": "events",
+  "base_price_agorot": 3900,
+  "schema": {
+    "layout": { "pageSize": "A5", "orientation": "portrait" },
+    "colorSets": [
+      { "key": "sky",    "label": "תכלת רך",    "bg": "#f2f7fb", "fg": "#1f3345", "accent": "#4a7fa5" },
+      { "key": "gold",   "label": "זהב קלאסי",  "bg": "#faf7f0", "fg": "#2b2b2b", "accent": "#b08d57" },
+      { "key": "mint",   "label": "מנטה עדין",  "bg": "#f1f8f4", "fg": "#22382c", "accent": "#4e8a68" },
+      { "key": "silver", "label": "כסוף חגיגי", "bg": "#f7f7f9", "fg": "#2c2c34", "accent": "#6e7686" }
+    ],
+    "fields": [
+      { "key": "blessing", "label": "פתיחה", "type": "text", "role": "opening",
+        "default": "בס\"ד", "maxLength": 30, "aiEnabled": false },
+
+      { "key": "invitation", "label": "נוסח ההזמנה", "type": "textarea", "role": "body",
+        "default": "בשמחה ובהודיה להשי\"ת\nעל הולדת בננו היקר\nהננו מתכבדים להזמינכם\nלשלום זכר",
+        "maxLength": 300, "aiEnabled": true },
+
+      { "key": "parsha", "label": "פרשת השבוע", "type": "text", "role": "detail",
+        "prefix": "בליל שבת קודש פרשת ", "required": true, "placeholder": "לך לך", "maxLength": 30, "aiEnabled": false },
+
+      { "key": "date", "label": "תאריך (יום שישי)", "type": "date", "role": "detail",
+        "prefix": "אור ל", "required": true, "aiEnabled": false },
+
+      { "key": "time", "label": "שעה", "type": "text", "role": "detail",
+        "prefix": "החל מהשעה ", "default": "20:30", "maxLength": 20, "aiEnabled": false },
+
+      { "key": "venue", "label": "בבית משפחת", "type": "text", "role": "detail",
+        "prefix": "בבית משפחת ", "required": true, "placeholder": "גולדשטיין", "maxLength": 60, "aiEnabled": false },
+
+      { "key": "address", "label": "כתובת", "type": "text", "role": "detail",
+        "required": true, "placeholder": "רח' עזרא 14, בני ברק", "maxLength": 80, "aiEnabled": false },
+
+      { "key": "closing", "label": "שורת סיום", "type": "text", "role": "signature",
+        "default": "נשמח לראותכם", "maxLength": 80, "aiEnabled": true },
+
+      { "key": "parents", "label": "שמות ההורים", "type": "text", "role": "signature",
+        "emphasis": true, "required": true, "placeholder": "יהודה ושירה גולדשטיין", "maxLength": 80, "aiEnabled": false }
+    ]
+  }
+}

@@ -73,6 +73,8 @@ export interface Template {
   slug: string;
   title: string;
   description: string | null;
+  /** Catalog-card image, public path (e.g. "/templates/wedding.jpg"); null = styled placeholder. */
+  thumbnail: string | null;
   schema: TemplateSchema;
   basePriceAgorot: number;
   isActive: boolean;

@@ -5,50 +5,166 @@
   "category_slug": "events",
   "base_price_agorot": 3900,
   "schema": {
-    "layout": { "pageSize": "A5", "orientation": "portrait" },
+    "layout": {
+      "pageSize": "A5",
+      "orientation": "portrait"
+    },
     "colorSets": [
-      { "key": "gold",    "label": "זהב קלאסי",  "bg": "#faf7f0", "fg": "#2b2b2b", "accent": "#b08d57" },
-      { "key": "jerusalem", "label": "ירושלים",   "bg": "#f8f9f6", "fg": "#33413a", "accent": "#5f7a4f" },
-      { "key": "blush",   "label": "ורוד עדין",   "bg": "#fdf3f3", "fg": "#3a2b2b", "accent": "#c98a8a" },
-      { "key": "royal",   "label": "כחול מלכותי", "bg": "#f2f5fb", "fg": "#1e2a3a", "accent": "#2f5597" }
+      {
+        "key": "gold",
+        "label": "זהב קלאסי",
+        "bg": "#faf7f0",
+        "fg": "#2b2b2b",
+        "accent": "#b08d57"
+      },
+      {
+        "key": "jerusalem",
+        "label": "ירושלים",
+        "bg": "#f8f9f6",
+        "fg": "#33413a",
+        "accent": "#5f7a4f"
+      },
+      {
+        "key": "blush",
+        "label": "ורוד עדין",
+        "bg": "#fdf3f3",
+        "fg": "#3a2b2b",
+        "accent": "#c98a8a"
+      },
+      {
+        "key": "royal",
+        "label": "כחול מלכותי",
+        "bg": "#f2f5fb",
+        "fg": "#1e2a3a",
+        "accent": "#2f5597"
+      }
     ],
     "fields": [
-      { "key": "blessing", "label": "פתיחה", "type": "text", "role": "opening",
-        "default": "בס\"ד", "maxLength": 30, "aiEnabled": false },
-
-      { "key": "motto", "label": "שורת פסוק", "type": "text", "role": "opening",
-        "default": "נעלה את ירושלים על ראש שמחתנו", "maxLength": 80, "aiEnabled": true },
-
-      { "key": "invitation", "label": "נוסח ההזמנה", "type": "textarea", "role": "body",
+      {
+        "key": "blessing",
+        "label": "פתיחה",
+        "type": "text",
+        "role": "opening",
+        "default": "בס\"ד",
+        "maxLength": 30,
+        "aiEnabled": false
+      },
+      {
+        "key": "motto",
+        "label": "שורת פסוק",
+        "type": "text",
+        "role": "opening",
+        "default": "נעלה את ירושלים על ראש שמחתנו",
+        "maxLength": 80,
+        "aiEnabled": true
+      },
+      {
+        "key": "invitation",
+        "label": "נוסח ההזמנה",
+        "type": "textarea",
+        "role": "body",
         "default": "בשבח והודיה להשי\"ת על כל הטוב אשר גמלנו,\nהננו מתכבדים להזמינכם להשתתף\nבשמחת כלולות ילדינו היקרים",
-        "maxLength": 300, "aiEnabled": true },
-
-      { "key": "groom", "label": "שם החתן", "type": "text", "role": "name", "row": "couple",
-        "required": true, "placeholder": "ראובן נ\"י", "maxLength": 40, "aiEnabled": false },
-
-      { "key": "bride", "label": "שם הכלה", "type": "text", "role": "name", "row": "couple",
-        "prefix": "עב\"ג ", "required": true, "placeholder": "נועה תחי'", "maxLength": 40, "aiEnabled": false },
-
-      { "key": "date", "label": "תאריך", "type": "date", "role": "detail",
-        "prefix": "שתתקיים אי\"ה בשעה טובה ומוצלחת ב", "required": true, "aiEnabled": false },
-
-      { "key": "venue", "label": "מקום האירוע", "type": "text", "role": "detail",
-        "prefix": "ב", "required": true, "placeholder": "אולמי כתר הרימון, אהרונוביץ' 10, בני ברק", "maxLength": 100, "aiEnabled": false },
-
-      { "key": "reception", "label": "קבלת פנים", "type": "text", "role": "detail", "row": "times",
-        "prefix": "קבלת פנים ", "placeholder": "18:00", "maxLength": 20, "aiEnabled": false },
-
-      { "key": "chuppah", "label": "חופה", "type": "text", "role": "detail", "row": "times",
-        "prefix": "חופה ", "placeholder": "19:00", "maxLength": 20, "aiEnabled": false },
-
-      { "key": "closing", "label": "שורת סיום", "type": "text", "role": "signature",
-        "default": "נשמח לראותכם משתתפים בשמחתנו", "maxLength": 80, "aiEnabled": true },
-
-      { "key": "groom_family", "label": "משפחת החתן (הורים, ומתחתיהם סבים)", "type": "textarea", "role": "signature", "row": "families",
-        "emphasis": true, "required": true, "placeholder": "שאול וטובה צרפתי\nדוד ורונית צרפתי\nמרדכי ומלכי פריד", "maxLength": 200, "aiEnabled": false },
-
-      { "key": "bride_family", "label": "משפחת הכלה (הורים, ומתחתיהם סבים)", "type": "textarea", "role": "signature", "row": "families",
-        "emphasis": true, "required": true, "placeholder": "יוחאי ושמרית זוסמן\nאהרון וליאור זוסמן\nטובה מנשה", "maxLength": 200, "aiEnabled": false }
+        "maxLength": 300,
+        "aiEnabled": true
+      },
+      {
+        "key": "groom",
+        "label": "שם החתן",
+        "type": "text",
+        "role": "name",
+        "row": "couple",
+        "required": true,
+        "placeholder": "ראובן נ\"י",
+        "maxLength": 40,
+        "aiEnabled": false
+      },
+      {
+        "key": "bride",
+        "label": "שם הכלה",
+        "type": "text",
+        "role": "name",
+        "row": "couple",
+        "prefix": "עב\"ג ",
+        "required": true,
+        "placeholder": "נועה תחי'",
+        "maxLength": 40,
+        "aiEnabled": false
+      },
+      {
+        "key": "date",
+        "label": "תאריך",
+        "type": "date",
+        "role": "detail",
+        "prefix": "שתתקיים אי\"ה בשעה טובה ומוצלחת ב",
+        "required": true,
+        "aiEnabled": false
+      },
+      {
+        "key": "venue",
+        "label": "מקום האירוע",
+        "type": "text",
+        "role": "detail",
+        "prefix": "ב",
+        "required": true,
+        "placeholder": "אולמי כתר הרימון, אהרונוביץ' 10, בני ברק",
+        "maxLength": 100,
+        "aiEnabled": false
+      },
+      {
+        "key": "reception",
+        "label": "קבלת פנים",
+        "type": "text",
+        "role": "detail",
+        "row": "times",
+        "prefix": "קבלת פנים ",
+        "placeholder": "18:00",
+        "maxLength": 20,
+        "aiEnabled": false
+      },
+      {
+        "key": "chuppah",
+        "label": "חופה",
+        "type": "text",
+        "role": "detail",
+        "row": "times",
+        "prefix": "חופה ",
+        "placeholder": "19:00",
+        "maxLength": 20,
+        "aiEnabled": false
+      },
+      {
+        "key": "closing",
+        "label": "שורת סיום",
+        "type": "text",
+        "role": "signature",
+        "default": "נשמח לראותכם משתתפים בשמחתנו",
+        "maxLength": 80,
+        "aiEnabled": true
+      },
+      {
+        "key": "groom_family",
+        "label": "משפחת החתן (הורים, ומתחתיהם סבים)",
+        "type": "textarea",
+        "role": "signature",
+        "row": "families",
+        "emphasis": true,
+        "required": true,
+        "placeholder": "שאול וטובה צרפתי\nדוד ורונית צרפתי\nמרדכי ומלכי פריד",
+        "maxLength": 200,
+        "aiEnabled": false
+      },
+      {
+        "key": "bride_family",
+        "label": "משפחת הכלה (הורים, ומתחתיהם סבים)",
+        "type": "textarea",
+        "role": "signature",
+        "row": "families",
+        "emphasis": true,
+        "required": true,
+        "placeholder": "יוחאי ושמרית זוסמן\nאהרון וליאור זוסמן\nטובה מנשה",
+        "maxLength": 200,
+        "aiEnabled": false
+      }
     ]
   }
 }
