@@ -13,14 +13,36 @@
       { "key": "olive",   "label": "ירוק זית",    "bg": "#f5f6ef", "fg": "#2b301f", "accent": "#7a8450" }
     ],
     "fields": [
-      { "key": "blessing",   "label": "פתיחה",        "type": "text",     "default": "בס\"ד", "maxLength": 20, "aiEnabled": false },
-      { "key": "groom",      "label": "שם החתן",      "type": "text",     "required": true, "maxLength": 40, "aiEnabled": false },
-      { "key": "bride",      "label": "שם הכלה",      "type": "text",     "required": true, "maxLength": 40, "aiEnabled": false },
-      { "key": "invitation", "label": "נוסח ההזמנה",  "type": "textarea", "default": "בשמחה ובהודיה להשם יתברך נשמח לראותכם בשמחת נישואי ילדינו", "maxLength": 300, "aiEnabled": true },
-      { "key": "date",       "label": "תאריך",        "type": "date",     "required": true, "aiEnabled": false },
-      { "key": "venue",      "label": "מקום האירוע",  "type": "text",     "required": true, "maxLength": 80, "aiEnabled": false },
-      { "key": "reception",  "label": "קבלת פנים",    "type": "text",     "placeholder": "לדוגמה: 19:00", "maxLength": 40, "aiEnabled": false },
-      { "key": "chuppah",    "label": "חופה",         "type": "text",     "placeholder": "לדוגמה: 20:00", "maxLength": 40, "aiEnabled": false }
+      { "key": "blessing", "label": "פתיחה", "type": "text", "role": "opening",
+        "default": "בס\"ד", "maxLength": 30, "aiEnabled": false },
+
+      { "key": "invitation", "label": "נוסח ההזמנה", "type": "textarea", "role": "body",
+        "default": "בשמחה ובהודיה להשם יתברך\nנשמח לראותכם בשמחת נישואי ילדינו",
+        "maxLength": 300, "aiEnabled": true },
+
+      { "key": "groom", "label": "שם החתן", "type": "text", "role": "name",
+        "required": true, "placeholder": "לדוגמה: ישראל נ\"י", "maxLength": 40, "aiEnabled": false },
+
+      { "key": "bride", "label": "שם הכלה", "type": "text", "role": "name",
+        "required": true, "placeholder": "לדוגמה: שרה תחי'", "maxLength": 40, "aiEnabled": false },
+
+      { "key": "date", "label": "תאריך", "type": "date", "role": "detail",
+        "prefix": "שתתקיים אי\"ה ב", "required": true, "aiEnabled": false },
+
+      { "key": "reception", "label": "קבלת פנים", "type": "text", "role": "detail",
+        "prefix": "קבלת פנים בשעה ", "placeholder": "19:00", "maxLength": 20, "aiEnabled": false },
+
+      { "key": "chuppah", "label": "חופה", "type": "text", "role": "detail",
+        "prefix": "חופה בשעה ", "placeholder": "20:00", "maxLength": 20, "aiEnabled": false },
+
+      { "key": "venue", "label": "מקום האירוע", "type": "text", "role": "detail",
+        "prefix": "ב", "required": true, "placeholder": "גני שמחה, ירושלים", "maxLength": 80, "aiEnabled": false },
+
+      { "key": "closing", "label": "שורת סיום", "type": "text", "role": "signature",
+        "default": "נשמח לראותכם משתתפים בשמחתנו", "maxLength": 80, "aiEnabled": true },
+
+      { "key": "parents", "label": "שמות ההורים", "type": "text", "role": "signature",
+        "emphasis": true, "placeholder": "משפחות הכהן והלוי", "maxLength": 100, "aiEnabled": false }
     ]
   }
 }

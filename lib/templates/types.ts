@@ -6,11 +6,24 @@
 
 export type FieldType = "text" | "textarea" | "date" | "select";
 
+/**
+ * The field's visual role on the document (declared in the JSON — the preview
+ * renders fields in array order, styled by role; nothing is hard-coded per type):
+ * - "opening"   — small line at the top (e.g. בס"ד)
+ * - "body"      — the invitation wording paragraph
+ * - "name"      — celebrant name(s), large in the accent color
+ * - "detail"    — date/time/venue lines (value printed with `prefix`, no label)
+ * - "signature" — closing block at the bottom (נשמח לראותכם, הורים, סבים)
+ */
+export type FieldRole = "opening" | "body" | "name" | "detail" | "signature";
+
 export interface TemplateField {
   /** Stable key stored in documents.content[key]. */
   key: string;
   label: string;
   type: FieldType;
+  /** Visual role on the document. Defaults to "detail". */
+  role?: FieldRole;
   /** Default wording (may be a traditional Hebrew phrase, e.g. "בס\"ד") — spec §12. */
   default?: string;
   placeholder?: string;
@@ -18,6 +31,12 @@ export interface TemplateField {
   maxLength?: number;
   /** Options for type "select". */
   options?: { value: string; label: string }[];
+  /** Printed immediately before the value on the document (e.g. "בשעה "). */
+  prefix?: string;
+  /** Bold/enlarged on the document (e.g. parents' names in the signature). */
+  emphasis?: boolean;
+  /** Print this field only when the referenced field has a value. */
+  dependsOn?: string;
   /** Whether the AI Writer may act on this field. */
   aiEnabled?: boolean;
 }

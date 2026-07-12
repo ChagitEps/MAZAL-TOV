@@ -27,7 +27,8 @@ interface SeedTemplate {
 let cache: Template[] | null = null;
 
 async function loadAll(): Promise<Template[]> {
-  if (cache) return cache;
+  // Cache only in production — in dev, template JSON edits must show immediately.
+  if (cache && process.env.NODE_ENV === "production") return cache;
   const files = (await fs.readdir(SEED_DIR)).filter((f) => f.endsWith(".json"));
   const templates = await Promise.all(
     files.map(async (file) => {
