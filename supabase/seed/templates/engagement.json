@@ -1,0 +1,51 @@
+{
+  "slug": "engagement",
+  "title": "הזמנה לוורט / אירוסין",
+  "description": "הזמנה מעוצבת לשמחת וורט או אירוסין — חתן עב\"ג כלה, תאריך עברי ומשפחות שני הצדדים.",
+  "category_slug": "events",
+  "base_price_agorot": 3900,
+  "schema": {
+    "layout": { "pageSize": "A5", "orientation": "portrait" },
+    "colorSets": [
+      { "key": "wine",   "label": "יין מלכותי", "bg": "#faf3f4", "fg": "#3b2027", "accent": "#8a3d52" },
+      { "key": "gold",   "label": "זהב קלאסי",  "bg": "#faf7f0", "fg": "#2b2b2b", "accent": "#b08d57" },
+      { "key": "royal",  "label": "כחול מלכותי", "bg": "#f2f5fb", "fg": "#1e2a3a", "accent": "#2f5597" },
+      { "key": "olive",  "label": "ירוק זית",    "bg": "#f5f6ef", "fg": "#2b301f", "accent": "#7a8450" }
+    ],
+    "fields": [
+      { "key": "blessing", "label": "פתיחה", "type": "text", "role": "opening",
+        "default": "בס\"ד", "maxLength": 30, "aiEnabled": false },
+
+      { "key": "invitation", "label": "נוסח ההזמנה", "type": "textarea", "role": "body",
+        "default": "בהודיה להשי\"ת על כל הטוב אשר גמלנו,\nהננו מתכבדים להזמינכם להשתתף\nבשמחת אירוסי ילדינו היקרים",
+        "maxLength": 300, "aiEnabled": true },
+
+      { "key": "groom", "label": "שם החתן", "type": "text", "role": "name", "row": "couple",
+        "required": true, "placeholder": "שמואל נ\"י", "maxLength": 40, "aiEnabled": false },
+
+      { "key": "bride", "label": "שם הכלה", "type": "text", "role": "name", "row": "couple",
+        "prefix": "עב\"ג ", "required": true, "placeholder": "אסתר תחי'", "maxLength": 40, "aiEnabled": false },
+
+      { "key": "date", "label": "תאריך", "type": "date", "role": "detail",
+        "prefix": "שתתקיים אי\"ה ב", "required": true, "aiEnabled": false },
+
+      { "key": "time", "label": "שעה", "type": "text", "role": "detail",
+        "prefix": "בשעה ", "placeholder": "20:00", "maxLength": 20, "aiEnabled": false },
+
+      { "key": "venue", "label": "מקום האירוע", "type": "text", "role": "detail",
+        "prefix": "ב", "required": true, "placeholder": "בית משפחת כהן", "maxLength": 100, "aiEnabled": false },
+
+      { "key": "address", "label": "כתובת", "type": "text", "role": "detail",
+        "placeholder": "רח' חזון איש 15, בני ברק", "maxLength": 80, "aiEnabled": false },
+
+      { "key": "closing", "label": "שורת סיום", "type": "text", "role": "signature",
+        "default": "נשמח לראותכם משתתפים בשמחתנו", "maxLength": 80, "aiEnabled": true },
+
+      { "key": "groom_family", "label": "משפחת החתן", "type": "textarea", "role": "signature", "row": "families",
+        "emphasis": true, "required": true, "placeholder": "אברהם ושרה כהן", "maxLength": 200, "aiEnabled": false },
+
+      { "key": "bride_family", "label": "משפחת הכלה", "type": "textarea", "role": "signature", "row": "families",
+        "emphasis": true, "required": true, "placeholder": "יצחק ורבקה לוי", "maxLength": 200, "aiEnabled": false }
+    ]
+  }
+}

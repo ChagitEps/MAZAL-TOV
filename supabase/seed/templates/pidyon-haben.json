@@ -1,0 +1,53 @@
+{
+  "slug": "pidyon-haben",
+  "title": "הזמנה לפדיון הבן",
+  "description": "הזמנה מעוצבת לסעודת מצווה של פדיון הבן בנוסח מסורתי, עם תאריך עברי.",
+  "category_slug": "events",
+  "base_price_agorot": 3900,
+  "schema": {
+    "layout": { "pageSize": "A5", "orientation": "portrait" },
+    "colorSets": [
+      { "key": "gold",   "label": "זהב קלאסי",  "bg": "#faf7f0", "fg": "#2b2b2b", "accent": "#b08d57" },
+      { "key": "sky",    "label": "תכלת רך",     "bg": "#f2f7fb", "fg": "#1f3345", "accent": "#4a7fa5" },
+      { "key": "bordo",  "label": "בורדו",       "bg": "#faf4f4", "fg": "#3c1f24", "accent": "#7b2d3b" },
+      { "key": "silver", "label": "כסוף חגיגי",  "bg": "#f7f7f9", "fg": "#2c2c34", "accent": "#6e7686" }
+    ],
+    "fields": [
+      { "key": "blessing", "label": "פתיחה", "type": "text", "role": "opening",
+        "default": "בס\"ד", "maxLength": 30, "aiEnabled": false },
+
+      { "key": "invitation", "label": "נוסח ההזמנה", "type": "textarea", "role": "body",
+        "default": "בשבח והודיה להשי\"ת\nהננו מתכבדים להזמינכם להשתתף\nבסעודת מצווה לרגל פדיון בננו בכורנו",
+        "maxLength": 300, "aiEnabled": true },
+
+      { "key": "baby", "label": "שם הבן", "type": "text", "role": "name",
+        "required": true, "placeholder": "לדוגמה: דוד נ\"י", "maxLength": 40, "aiEnabled": false },
+
+      { "key": "date", "label": "תאריך", "type": "date", "role": "detail",
+        "prefix": "שתתקיים אי\"ה ב", "required": true, "aiEnabled": false },
+
+      { "key": "time", "label": "שעה", "type": "text", "role": "detail",
+        "prefix": "בשעה ", "placeholder": "18:00", "maxLength": 20, "aiEnabled": false },
+
+      { "key": "venue", "label": "מקום האירוע", "type": "text", "role": "detail",
+        "prefix": "ב", "required": true, "placeholder": "אולם בית הכנסת \"בית יעקב\"", "maxLength": 100, "aiEnabled": false },
+
+      { "key": "address", "label": "כתובת", "type": "text", "role": "detail",
+        "placeholder": "רח' רש\"י 8, ירושלים", "maxLength": 80, "aiEnabled": false },
+
+      { "key": "closing", "label": "שורת סיום", "type": "text", "role": "signature",
+        "default": "נשמח לראותכם משתתפים בשמחתנו", "maxLength": 80, "aiEnabled": true },
+
+      { "key": "parents", "label": "שמות ההורים", "type": "text", "role": "signature",
+        "emphasis": true, "required": true, "placeholder": "משה ורות פרידמן", "maxLength": 80, "aiEnabled": false },
+
+      { "key": "grandparents_invite", "label": "שורת הזמנת הסבים", "type": "text", "role": "signature",
+        "dependsOn": "grandparents",
+        "default": "גם אנו מתכבדים להזמינכם להשתתף בשמחת נכדנו",
+        "maxLength": 120, "aiEnabled": true },
+
+      { "key": "grandparents", "label": "שמות הסבים והסבתות", "type": "text", "role": "signature",
+        "emphasis": true, "placeholder": "משפחות פרידמן ושטרן", "maxLength": 120, "aiEnabled": false }
+    ]
+  }
+}

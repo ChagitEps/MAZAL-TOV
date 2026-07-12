@@ -1,0 +1,53 @@
+{
+  "slug": "brit",
+  "title": "הזמנה לברית מילה",
+  "description": "הזמנה מעוצבת לסעודת ברית מילה בנוסח מסורתי — עם תאריך עברי ושמות ההורים והסבים.",
+  "category_slug": "events",
+  "base_price_agorot": 3900,
+  "schema": {
+    "layout": { "pageSize": "A5", "orientation": "portrait" },
+    "colorSets": [
+      { "key": "sky",    "label": "תכלת רך",     "bg": "#f2f7fb", "fg": "#1f3345", "accent": "#4a7fa5" },
+      { "key": "gold",   "label": "זהב קלאסי",   "bg": "#faf7f0", "fg": "#2b2b2b", "accent": "#b08d57" },
+      { "key": "mint",   "label": "מנטה עדין",   "bg": "#f1f8f4", "fg": "#22382c", "accent": "#4e8a68" },
+      { "key": "silver", "label": "כסוף חגיגי",  "bg": "#f7f7f9", "fg": "#2c2c34", "accent": "#6e7686" }
+    ],
+    "fields": [
+      { "key": "blessing", "label": "פתיחה", "type": "text", "role": "opening",
+        "default": "בס\"ד", "maxLength": 30, "aiEnabled": false },
+
+      { "key": "invitation", "label": "נוסח ההזמנה", "type": "textarea", "role": "body",
+        "default": "בשמחה ובהודיה לבורא עולם\nהננו מתכבדים להזמינכם להשתתף\nבשמחת ברית המילה של בננו היקר\nשתתקיים ברוב פאר והדר",
+        "maxLength": 300, "aiEnabled": true },
+
+      { "key": "baby", "label": "שם התינוק (אם ידוע)", "type": "text", "role": "name",
+        "placeholder": "השם יוכרז בע\"ה בברית", "maxLength": 40, "aiEnabled": false },
+
+      { "key": "date", "label": "תאריך", "type": "date", "role": "detail",
+        "prefix": "אי\"ה ב", "required": true, "aiEnabled": false },
+
+      { "key": "time", "label": "שעת הברית", "type": "text", "role": "detail",
+        "prefix": "הברית בשעה ", "placeholder": "10:00", "maxLength": 20, "aiEnabled": false },
+
+      { "key": "venue", "label": "מקום האירוע", "type": "text", "role": "detail",
+        "prefix": "ב", "required": true, "placeholder": "בית הכנסת \"אוהל משה\"", "maxLength": 100, "aiEnabled": false },
+
+      { "key": "address", "label": "כתובת", "type": "text", "role": "detail",
+        "placeholder": "רח' הדקל 12, פתח תקווה", "maxLength": 80, "aiEnabled": false },
+
+      { "key": "closing", "label": "שורת סיום", "type": "text", "role": "signature",
+        "default": "נשמח לראותכם משתתפים בשמחתנו", "maxLength": 80, "aiEnabled": true },
+
+      { "key": "parents", "label": "שמות ההורים", "type": "text", "role": "signature",
+        "emphasis": true, "required": true, "placeholder": "אליהו ותמר כהן", "maxLength": 80, "aiEnabled": false },
+
+      { "key": "grandparents_invite", "label": "שורת הזמנת הסבים", "type": "text", "role": "signature",
+        "dependsOn": "grandparents",
+        "default": "גם אנו מתכבדים להזמינכם להשתתף בשמחת נכדנו",
+        "maxLength": 120, "aiEnabled": true },
+
+      { "key": "grandparents", "label": "שמות הסבים והסבתות", "type": "text", "role": "signature",
+        "emphasis": true, "placeholder": "משפחות כהן ולוי", "maxLength": 120, "aiEnabled": false }
+    ]
+  }
+}

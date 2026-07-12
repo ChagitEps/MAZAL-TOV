@@ -1,0 +1,53 @@
+{
+  "slug": "bat-mitzvah",
+  "title": "הזמנה לבת מצווה",
+  "description": "הזמנה מעוצבת לבת מצווה בנוסח מסורתי — נוסח ההזמנה, שם הבת, תאריך עברי ולועזי, הורים וסבים.",
+  "category_slug": "events",
+  "base_price_agorot": 3900,
+  "schema": {
+    "layout": { "pageSize": "A5", "orientation": "portrait" },
+    "colorSets": [
+      { "key": "rose",     "label": "ורוד עתיק",   "bg": "#fdf4f5", "fg": "#43242c", "accent": "#b3577a" },
+      { "key": "lilac",    "label": "לילך",        "bg": "#f7f4fb", "fg": "#332b45", "accent": "#7a5ea8" },
+      { "key": "gold",     "label": "זהב קלאסי",   "bg": "#faf7f0", "fg": "#2b2b2b", "accent": "#b08d57" },
+      { "key": "teal",     "label": "טורקיז עדין", "bg": "#f0f8f8", "fg": "#1e3a3a", "accent": "#3e8484" }
+    ],
+    "fields": [
+      { "key": "blessing", "label": "פתיחה", "type": "text", "role": "opening",
+        "default": "בס\"ד", "maxLength": 30, "aiEnabled": false },
+
+      { "key": "invitation", "label": "נוסח ההזמנה", "type": "textarea", "role": "body",
+        "default": "בשבח והודיה להשי\"ת\nאנו מתכבדים להזמינכם\nלשמחת בת המצווה\nשל בתנו היקרה",
+        "maxLength": 300, "aiEnabled": true },
+
+      { "key": "girl", "label": "שם כלת השמחה", "type": "text", "role": "name",
+        "required": true, "placeholder": "לדוגמה: רחלי תחי'", "maxLength": 40, "aiEnabled": false },
+
+      { "key": "date", "label": "תאריך", "type": "date", "role": "detail",
+        "prefix": "שתתקיים אי\"ה ב", "required": true, "aiEnabled": false },
+
+      { "key": "time", "label": "שעה", "type": "text", "role": "detail",
+        "prefix": "בשעה ", "placeholder": "18:30", "maxLength": 20, "aiEnabled": false },
+
+      { "key": "venue", "label": "מקום האירוע", "type": "text", "role": "detail",
+        "prefix": "ב", "required": true, "placeholder": "אולם \"פנינת השמחה\"", "maxLength": 100, "aiEnabled": false },
+
+      { "key": "address", "label": "כתובת", "type": "text", "role": "detail",
+        "placeholder": "רח' הרימון 5, אלעד", "maxLength": 80, "aiEnabled": false },
+
+      { "key": "closing", "label": "שורת סיום", "type": "text", "role": "signature",
+        "default": "נשמח לראותכן משתתפות בשמחתנו", "maxLength": 80, "aiEnabled": true },
+
+      { "key": "parents", "label": "שמות ההורים", "type": "text", "role": "signature",
+        "emphasis": true, "required": true, "placeholder": "יעקב ומיכל לוי", "maxLength": 80, "aiEnabled": false },
+
+      { "key": "grandparents_invite", "label": "שורת הזמנת הסבים", "type": "text", "role": "signature",
+        "dependsOn": "grandparents",
+        "default": "גם אנו מתכבדים להזמינכן להשתתף בשמחת נכדתנו היקרה",
+        "maxLength": 120, "aiEnabled": true },
+
+      { "key": "grandparents", "label": "שמות הסבים והסבתות", "type": "text", "role": "signature",
+        "emphasis": true, "placeholder": "משפחות לוי ומזרחי", "maxLength": 120, "aiEnabled": false }
+    ]
+  }
+}

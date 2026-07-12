@@ -1,0 +1,33 @@
+{
+  "slug": "welcome-sign",
+  "title": "שלט ברכה לאירוע",
+  "description": "שלט ברכה מעוצב בגודל A4 לקבלת פנים — ברוכים הבאים לשמחה, עם שם בעלי השמחה והאירוע.",
+  "category_slug": "events",
+  "base_price_agorot": 3900,
+  "schema": {
+    "layout": { "pageSize": "A4", "orientation": "portrait" },
+    "colorSets": [
+      { "key": "gold",   "label": "זהב מלכותי", "bg": "#faf6ec", "fg": "#33290f", "accent": "#a8853c" },
+      { "key": "navy",   "label": "כחול עמוק",  "bg": "#f3f6fa", "fg": "#182a45", "accent": "#1f4e79" },
+      { "key": "bordo",  "label": "בורדו",       "bg": "#faf4f4", "fg": "#3c1f24", "accent": "#7b2d3b" },
+      { "key": "forest", "label": "ירוק יער",    "bg": "#f2f7f3", "fg": "#1d3324", "accent": "#2e6b46" }
+    ],
+    "fields": [
+      { "key": "blessing", "label": "פתיחה", "type": "text", "role": "opening",
+        "default": "בס\"ד", "maxLength": 30, "aiEnabled": false },
+
+      { "key": "heading", "label": "כותרת השלט", "type": "text", "role": "name",
+        "default": "ברוכים הבאים", "required": true, "maxLength": 40, "aiEnabled": false },
+
+      { "key": "greeting", "label": "נוסח הברכה", "type": "textarea", "role": "body",
+        "default": "אורחים יקרים,\nברוכים הבאים בשם ה'\nלשמחת משפחתנו",
+        "maxLength": 300, "aiEnabled": true },
+
+      { "key": "event", "label": "האירוע", "type": "text", "role": "detail",
+        "placeholder": "שמחת נישואי ראובן ונועה", "maxLength": 80, "aiEnabled": false },
+
+      { "key": "hosts", "label": "בעלי השמחה", "type": "text", "role": "signature",
+        "emphasis": true, "required": true, "placeholder": "משפחות צרפתי וזוסמן", "maxLength": 100, "aiEnabled": false }
+    ]
+  }
+}

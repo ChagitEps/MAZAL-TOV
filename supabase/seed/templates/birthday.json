@@ -1,0 +1,48 @@
+{
+  "slug": "birthday",
+  "title": "הזמנה ליום הולדת",
+  "description": "הזמנה שמחה וצבעונית ליום הולדת — לילדים ולמבוגרים, עם שם, גיל ופרטי המסיבה.",
+  "category_slug": "events",
+  "base_price_agorot": 3900,
+  "schema": {
+    "layout": { "pageSize": "A5", "orientation": "portrait" },
+    "colorSets": [
+      { "key": "sunny",   "label": "צהוב שמח",   "bg": "#fdf9ec", "fg": "#4a3a12", "accent": "#d9a516" },
+      { "key": "candy",   "label": "ורוד מתוק",   "bg": "#fdf2f6", "fg": "#46212f", "accent": "#d16490" },
+      { "key": "ocean",   "label": "כחול ים",     "bg": "#eff6fb", "fg": "#173349", "accent": "#2e7fb5" },
+      { "key": "grass",   "label": "ירוק דשא",    "bg": "#f1f9f0", "fg": "#23401f", "accent": "#4d9243" }
+    ],
+    "fields": [
+      { "key": "blessing", "label": "פתיחה", "type": "text", "role": "opening",
+        "default": "בס\"ד", "maxLength": 30, "aiEnabled": false },
+
+      { "key": "invitation", "label": "נוסח ההזמנה", "type": "textarea", "role": "body",
+        "default": "מתרגשים ושמחים להזמין אתכם\nלחגוג יחד איתנו\nאת יום ההולדת של",
+        "maxLength": 300, "aiEnabled": true },
+
+      { "key": "name", "label": "שם חתן/כלת השמחה", "type": "text", "role": "name",
+        "required": true, "placeholder": "לדוגמה: איתמר", "maxLength": 40, "aiEnabled": false },
+
+      { "key": "age", "label": "הגיל החדש", "type": "text", "role": "detail",
+        "prefix": "שחוגג/ת ", "placeholder": "8", "maxLength": 20, "aiEnabled": false },
+
+      { "key": "date", "label": "תאריך", "type": "date", "role": "detail",
+        "prefix": "ב", "required": true, "aiEnabled": false },
+
+      { "key": "time", "label": "שעה", "type": "text", "role": "detail",
+        "prefix": "בשעה ", "placeholder": "17:00", "maxLength": 20, "aiEnabled": false },
+
+      { "key": "venue", "label": "מקום המסיבה", "type": "text", "role": "detail",
+        "prefix": "ב", "required": true, "placeholder": "גינת הפארק, רח' האורנים 3", "maxLength": 100, "aiEnabled": false },
+
+      { "key": "notes", "label": "הערה למוזמנים", "type": "text", "role": "detail",
+        "placeholder": "נא לאשר הגעה עד יום שלישי", "maxLength": 100, "aiEnabled": true },
+
+      { "key": "closing", "label": "שורת סיום", "type": "text", "role": "signature",
+        "default": "מחכים לכם באהבה", "maxLength": 80, "aiEnabled": true },
+
+      { "key": "hosts", "label": "שמות המזמינים", "type": "text", "role": "signature",
+        "emphasis": true, "required": true, "placeholder": "משפחת ברקוביץ'", "maxLength": 80, "aiEnabled": false }
+    ]
+  }
+}
