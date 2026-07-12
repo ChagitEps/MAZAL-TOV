@@ -1,0 +1,26 @@
+{
+  "slug": "wedding",
+  "title": "הזמנה לחתונה",
+  "description": "הזמנה מעוצבת לחתונה בעברית — מילוי פרטים, שיפור נוסח ב-AI והורדת PDF באיכות דפוס.",
+  "category_slug": "events",
+  "base_price_agorot": 3900,
+  "schema": {
+    "layout": { "pageSize": "A5", "orientation": "portrait" },
+    "colorSets": [
+      { "key": "gold",    "label": "זהב קלאסי",  "bg": "#faf7f0", "fg": "#2b2b2b", "accent": "#b08d57" },
+      { "key": "blush",   "label": "ורוד עדין",   "bg": "#fdf3f3", "fg": "#3a2b2b", "accent": "#c98a8a" },
+      { "key": "royal",   "label": "כחול מלכותי", "bg": "#f2f5fb", "fg": "#1e2a3a", "accent": "#2f5597" },
+      { "key": "olive",   "label": "ירוק זית",    "bg": "#f5f6ef", "fg": "#2b301f", "accent": "#7a8450" }
+    ],
+    "fields": [
+      { "key": "blessing",   "label": "פתיחה",        "type": "text",     "default": "בס\"ד", "maxLength": 20, "aiEnabled": false },
+      { "key": "groom",      "label": "שם החתן",      "type": "text",     "required": true, "maxLength": 40, "aiEnabled": false },
+      { "key": "bride",      "label": "שם הכלה",      "type": "text",     "required": true, "maxLength": 40, "aiEnabled": false },
+      { "key": "invitation", "label": "נוסח ההזמנה",  "type": "textarea", "default": "בשמחה ובהודיה להשם יתברך נשמח לראותכם בשמחת נישואי ילדינו", "maxLength": 300, "aiEnabled": true },
+      { "key": "date",       "label": "תאריך",        "type": "date",     "required": true, "aiEnabled": false },
+      { "key": "venue",      "label": "מקום האירוע",  "type": "text",     "required": true, "maxLength": 80, "aiEnabled": false },
+      { "key": "reception",  "label": "קבלת פנים",    "type": "text",     "placeholder": "לדוגמה: 19:00", "maxLength": 40, "aiEnabled": false },
+      { "key": "chuppah",    "label": "חופה",         "type": "text",     "placeholder": "לדוגמה: 20:00", "maxLength": 40, "aiEnabled": false }
+    ]
+  }
+}

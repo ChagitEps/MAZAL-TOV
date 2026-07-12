@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #1a1a2e;
+}
+
+@layer base {
+  html {
+    /* RTL Hebrew to the pixel — spec §12. Set on <html> in the root layout too. */
+    direction: rtl;
+  }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-feature-settings: "kern";
+    -webkit-font-smoothing: antialiased;
+  }
+}
