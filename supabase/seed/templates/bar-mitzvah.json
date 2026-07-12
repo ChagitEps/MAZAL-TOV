@@ -46,10 +46,10 @@
         "default": "גם אנו מתכבדים להזמינכם להשתתף בשמחת נכדנו היקר",
         "maxLength": 120, "aiEnabled": true },
 
-      { "key": "grandparents1", "label": "סבא וסבתא — צד האבא", "type": "text", "role": "signature",
+      { "key": "grandparents1", "label": "סבא וסבתא — צד האבא", "type": "text", "role": "signature", "row": "grandparents",
         "emphasis": true, "placeholder": "הרב אברהם מצליח ורעייתו", "maxLength": 80, "aiEnabled": false },
 
-      { "key": "grandparents2", "label": "סבא וסבתא — צד האמא", "type": "text", "role": "signature",
+      { "key": "grandparents2", "label": "סבא וסבתא — צד האמא", "type": "text", "role": "signature", "row": "grandparents",
         "emphasis": true, "placeholder": "הרב ישעיהו מיכאלי ורעייתו", "maxLength": 80, "aiEnabled": false }
     ]
   }
