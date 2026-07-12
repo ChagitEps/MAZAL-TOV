@@ -80,9 +80,9 @@ export function DocumentPreview({ schema, values, colorSet, print }: PreviewProp
         );
       case "name":
         return (
-          <div key={f.key} className="flex items-end gap-2">
+          <div key={f.key} className="flex items-center gap-3">
             {f.prefix && (
-              <span className="pb-1 text-sm font-normal opacity-75">{f.prefix.trim()}</span>
+              <span className="text-sm font-normal opacity-75">{f.prefix.trim()}</span>
             )}
             <span
               className="text-3xl font-bold leading-snug"
@@ -127,16 +127,25 @@ export function DocumentPreview({ schema, values, colorSet, print }: PreviewProp
     list: TemplateField[],
     render: (f: TemplateField) => ReactNode,
   ) =>
-    groupRows(list).map((group) =>
-      group.length === 1 ? (
-        render(group[0])
-      ) : (
-        // RTL flex row: first field in the JSON lands rightmost (e.g. groom side).
-        <div key={group[0].key} className="flex w-full items-start justify-center gap-8">
+    groupRows(list).map((group) => {
+      if (group.length === 1) return render(group[0]);
+      // RTL flex row: first field in the JSON lands rightmost (e.g. groom side).
+      // Name rows (groom עב"ג bride) sit tight and vertically centered;
+      // other rows (times, family columns) keep a wide, top-aligned spread.
+      const isNameRow = group.every((f) => (f.role ?? "detail") === "name");
+      return (
+        <div
+          key={group[0].key}
+          className={
+            isNameRow
+              ? "flex w-full items-center justify-center gap-3"
+              : "flex w-full items-start justify-center gap-8"
+          }
+        >
           {group.map((f) => render(f))}
         </div>
-      ),
-    );
+      );
+    });
 
   return (
     <div
