@@ -31,8 +31,12 @@ export interface TemplateField {
   maxLength?: number;
   /** Options for type "select". */
   options?: { value: string; label: string }[];
-  /** Printed immediately before the value on the document (e.g. "בשעה "). */
+  /** Printed immediately before the value on the document (e.g. "בשעה ").
+   *  On a "name" field it renders small between the large names (e.g. עב"ג). */
   prefix?: string;
+  /** Fields sharing the same row key render side by side (e.g. groom|bride,
+   *  reception|chuppah, groom-family|bride-family columns). RTL: first = rightmost. */
+  row?: string;
   /** Bold/enlarged on the document (e.g. parents' names in the signature). */
   emphasis?: boolean;
   /** Print this field only when the referenced field has a value. */
