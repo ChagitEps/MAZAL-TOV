@@ -10,7 +10,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         // Hebrew-first UI stack. PDF stage embeds print fonts (פרנק-רול, היבו, דוד) — spec §12.
-        sans: ["Heebo", "Assistant", "Arial Hebrew", "Arial", "sans-serif"],
+        sans: ["var(--font-heebo)", "Heebo", "Assistant", "Arial Hebrew", "Arial", "sans-serif"],
       },
       colors: {
         brand: {

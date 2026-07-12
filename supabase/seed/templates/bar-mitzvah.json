@@ -1,0 +1,30 @@
+{
+  "slug": "bar-mitzvah",
+  "title": "הזמנה לבר מצווה",
+  "description": "הזמנה מעוצבת לבר מצווה — עלייה לתורה או סעודת מצווה, בנוסח מסורתי הניתן לעריכה.",
+  "category_slug": "events",
+  "base_price_agorot": 3900,
+  "schema": {
+    "layout": { "pageSize": "A5", "orientation": "portrait" },
+    "colorSets": [
+      { "key": "navy",   "label": "כחול עמוק",  "bg": "#f3f6fa", "fg": "#182a45", "accent": "#1f4e79" },
+      { "key": "bordo",  "label": "בורדו",       "bg": "#faf4f4", "fg": "#3c1f24", "accent": "#7b2d3b" },
+      { "key": "forest", "label": "ירוק יער",    "bg": "#f2f7f3", "fg": "#1d3324", "accent": "#2e6b46" },
+      { "key": "silver", "label": "כסוף חגיגי",  "bg": "#f7f7f9", "fg": "#2c2c34", "accent": "#6e7686" }
+    ],
+    "fields": [
+      { "key": "blessing",   "label": "פתיחה",        "type": "text",     "default": "בס\"ד", "maxLength": 20, "aiEnabled": false },
+      { "key": "boy",        "label": "שם חתן הבר מצווה", "type": "text", "required": true, "maxLength": 40, "aiEnabled": false },
+      { "key": "parents",    "label": "שמות ההורים",  "type": "text",     "required": true, "maxLength": 80, "aiEnabled": false },
+      { "key": "invitation", "label": "נוסח ההזמנה",  "type": "textarea", "default": "בשבח והודיה להשם יתברך, הננו מתכבדים להזמינכם לחגוג עמנו את שמחת הבר מצווה של בננו היקר", "maxLength": 300, "aiEnabled": true },
+      { "key": "event_type", "label": "סוג האירוע",   "type": "select",   "default": "seuda", "options": [
+        { "value": "aliyah", "label": "עלייה לתורה" },
+        { "value": "seuda",  "label": "סעודת מצווה" },
+        { "value": "both",   "label": "עלייה לתורה וסעודת מצווה" }
+      ], "aiEnabled": false },
+      { "key": "date",       "label": "תאריך",        "type": "date",     "required": true, "aiEnabled": false },
+      { "key": "venue",      "label": "מקום האירוע",  "type": "text",     "required": true, "maxLength": 80, "aiEnabled": false },
+      { "key": "time",       "label": "שעה",          "type": "text",     "placeholder": "לדוגמה: 19:30", "maxLength": 40, "aiEnabled": false }
+    ]
+  }
+}
