@@ -7,6 +7,7 @@ import { loadDraft, saveDraft } from "@/lib/drafts";
 import {
   BACKGROUNDS,
   FONTS,
+  SPACINGS,
   SIZE_MAX,
   SIZE_MIN,
   fontCss,
@@ -34,6 +35,7 @@ export function GeneratorClient({ template }: { template: Template }) {
   const [colorKey, setColorKey] = useState(template.schema.colorSets[0].key);
   const [font, setFont] = useState<string>(FONTS[0].key);
   const [background, setBackground] = useState<string>(BACKGROUNDS[0].key);
+  const [spacing, setSpacing] = useState<string>("normal");
   const [styles, setStyles] = useState<FieldStyles>({});
   const [restored, setRestored] = useState(false); // draft loaded (or none existed)
 
@@ -48,6 +50,9 @@ export function GeneratorClient({ template }: { template: Template }) {
       if (draft.font && FONTS.some((f) => f.key === draft.font)) setFont(draft.font);
       if (draft.background && BACKGROUNDS.some((b) => b.key === draft.background)) {
         setBackground(draft.background);
+      }
+      if (draft.spacing && SPACINGS.some((s) => s.key === draft.spacing)) {
+        setSpacing(draft.spacing);
       }
       if (draft.styles) setStyles(draft.styles);
     }
@@ -69,9 +74,10 @@ export function GeneratorClient({ template }: { template: Template }) {
       colorKey,
       font,
       background,
+      spacing,
       styles,
     });
-  }, [restored, values, colorKey, font, background, styles, template]);
+  }, [restored, values, colorKey, font, background, spacing, styles, template]);
 
   const colorSet =
     template.schema.colorSets.find((c) => c.key === colorKey) ??
@@ -86,7 +92,7 @@ export function GeneratorClient({ template }: { template: Template }) {
 
   // Draft-PDF link: everything the preview shows, URL-encoded for the render route.
   const draftPdfUrl = `/api/pdf/${template.slug}?d=${encodeURIComponent(
-    JSON.stringify({ values, colorKey, font, background, styles }),
+    JSON.stringify({ values, colorKey, font, background, spacing, styles }),
   )}`;
 
   return (
@@ -137,6 +143,29 @@ export function GeneratorClient({ template }: { template: Template }) {
                   }
                 >
                   {f.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <div className="text-sm font-medium">ריווח שורות</div>
+            <div role="radiogroup" aria-label="ריווח שורות" className="mt-2 flex flex-wrap gap-2">
+              {SPACINGS.map((s) => (
+                <button
+                  key={s.key}
+                  type="button"
+                  role="radio"
+                  aria-checked={spacing === s.key}
+                  onClick={() => setSpacing(s.key)}
+                  className={
+                    "rounded-full border ps-4 pe-4 py-1 text-sm transition " +
+                    (spacing === s.key
+                      ? "border-brand ring-1 ring-brand"
+                      : "border-gray-300 hover:border-gray-400")
+                  }
+                >
+                  {s.label}
                 </button>
               ))}
             </div>
@@ -205,6 +234,7 @@ export function GeneratorClient({ template }: { template: Template }) {
             colorSet={colorSet}
             font={font}
             background={background}
+            spacing={spacing}
             styles={styles}
           />
         </div>

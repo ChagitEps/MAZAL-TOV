@@ -14,6 +14,7 @@ export interface Draft {
   /** Style choices (lib/styleOptions.ts) — optional, older drafts lack them. */
   font?: string;
   background?: string;
+  spacing?: string;
   styles?: Record<string, { sizeDelta?: number }>;
   updatedAt: number; // epoch ms
 }

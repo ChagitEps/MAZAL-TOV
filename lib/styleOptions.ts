@@ -60,6 +60,21 @@ export function backgroundCss(key: string | undefined, cs: ColorSet): CSSPropert
   }
 }
 
+/** Line-spacing scale for the whole document: affects text line-height AND the
+ *  vertical gaps between the document's rows — preview and PDF identically. */
+export const SPACINGS = [
+  { key: "compact", label: "צפוף", factor: 0.8 },
+  { key: "normal", label: "רגיל", factor: 1 },
+  { key: "spacious", label: "מרווח", factor: 1.25 },
+  { key: "wide", label: "רחב", factor: 1.5 },
+] as const;
+
+export type SpacingKey = (typeof SPACINGS)[number]["key"];
+
+export function spacingFactor(key: string | undefined): number {
+  return SPACINGS.find((s) => s.key === key)?.factor ?? 1;
+}
+
 /** Per-field style overrides chosen by the user. Keyed by field key. */
 export interface FieldStyle {
   /** Size steps: -3..+3. Each step scales the field's base size by 12%. */

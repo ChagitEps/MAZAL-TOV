@@ -16,6 +16,7 @@ interface PrintData {
   colorKey: string;
   font?: string;
   background?: string;
+  spacing?: string;
   styles?: Record<string, { sizeDelta?: number }>;
 }
 
@@ -52,6 +53,7 @@ export default async function PrintPage({
         colorSet={colorSet}
         font={data.font}
         background={data.background}
+        spacing={data.spacing}
         styles={data.styles}
         print
       />
