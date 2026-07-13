@@ -4,6 +4,7 @@
   "description": "הזמנה מעוצבת לבר מצווה בנוסח מסורתי — נוסח ההזמנה, שם הבן, תאריך עברי ולועזי, הורים וסבים.",
   "category_slug": "events",
   "base_price_agorot": 3900,
+  "thumbnail": "/templates/bar-mitzvah.png",
   "schema": {
     "layout": { "pageSize": "A5", "orientation": "portrait" },
     "colorSets": [
