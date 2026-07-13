@@ -1,6 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
 import type { ColorSet, TemplateField, TemplateSchema } from "@/lib/templates/types";
 import { formatHebrewDate } from "@/lib/hebrewDate";
+import { backgroundCss, fontCss, scaledRem, type FieldStyles } from "@/lib/styleOptions";
 
 /**
  * The live document preview — THIS HTML is what Puppeteer will rasterize to PDF
@@ -17,9 +18,24 @@ export interface PreviewProps {
   schema: TemplateSchema;
   values: Record<string, string>;
   colorSet: ColorSet;
+  /** User style choices (lib/styleOptions.ts) — travel with the draft & PDF. */
+  font?: string;
+  background?: string;
+  styles?: FieldStyles;
   /** Print mode: exact page dimensions in mm, no screen chrome (shadow/rounding).
    *  Used by the /print page that Puppeteer rasterizes — spec §12. */
   print?: boolean;
+}
+
+/** fontSize override for a field: the role's base size (rem) scaled by the
+ *  user's delta. undefined when untouched — the Tailwind class stays in charge. */
+function sizeStyle(
+  styles: FieldStyles | undefined,
+  key: string,
+  baseRem: number,
+): CSSProperties | undefined {
+  const fontSize = scaledRem(baseRem, styles?.[key]?.sizeDelta);
+  return fontSize ? { fontSize } : undefined;
 }
 
 function rawValue(field: TemplateField, values: Record<string, string>): string {
@@ -61,7 +77,7 @@ const PAGE_MM = {
 } as const;
 
 /** Document variant (CV, letters): start-aligned professional flow — spec §6. */
-function DocumentVariant({ schema, values, colorSet }: Omit<PreviewProps, "print">) {
+function DocumentVariant({ schema, values, colorSet, styles }: Omit<PreviewProps, "print">) {
   const fields = schema.fields.filter((f) => printable(f, values));
   const role = (f: TemplateField) => f.role ?? "detail";
 
@@ -81,7 +97,7 @@ function DocumentVariant({ schema, values, colorSet }: Omit<PreviewProps, "print
           return (
             <div key={block[0].key} className="text-sm opacity-85">
               {block.map((f, i) => (
-                <span key={f.key}>
+                <span key={f.key} style={sizeStyle(styles, f.key, 0.875)}>
                   {i > 0 && <span className="mx-2 opacity-60">·</span>}
                   {f.prefix}
                   {rawValue(f, values)}
@@ -95,7 +111,7 @@ function DocumentVariant({ schema, values, colorSet }: Omit<PreviewProps, "print
         switch (role(f)) {
           case "opening":
             return (
-              <div key={f.key} className="text-xs opacity-70">
+              <div key={f.key} className="text-xs opacity-70" style={sizeStyle(styles, f.key, 0.75)}>
                 {v}
               </div>
             );
@@ -104,14 +120,14 @@ function DocumentVariant({ schema, values, colorSet }: Omit<PreviewProps, "print
               <h1
                 key={f.key}
                 className="text-3xl font-bold leading-tight"
-                style={{ color: colorSet.accent }}
+                style={{ color: colorSet.accent, ...sizeStyle(styles, f.key, 1.875) }}
               >
                 {v}
               </h1>
             );
           case "body":
             return (
-              <p key={f.key} className="-mt-2 whitespace-pre-line text-base">
+              <p key={f.key} className="-mt-2 whitespace-pre-line text-base" style={sizeStyle(styles, f.key, 1)}>
                 {v}
               </p>
             );
@@ -124,7 +140,9 @@ function DocumentVariant({ schema, values, colorSet }: Omit<PreviewProps, "print
                 >
                   {f.label}
                 </h2>
-                <div className="whitespace-pre-line text-sm leading-relaxed">{v}</div>
+                <div className="whitespace-pre-line text-sm leading-relaxed" style={sizeStyle(styles, f.key, 0.875)}>
+                  {v}
+                </div>
               </section>
             );
           default: // signature
@@ -135,6 +153,7 @@ function DocumentVariant({ schema, values, colorSet }: Omit<PreviewProps, "print
                   (f.emphasis ? "font-semibold " : "opacity-85 ") +
                   "mt-auto whitespace-pre-line text-sm"
                 }
+                style={sizeStyle(styles, f.key, 0.875)}
               >
                 {f.prefix}
                 {v}
@@ -146,7 +165,15 @@ function DocumentVariant({ schema, values, colorSet }: Omit<PreviewProps, "print
   );
 }
 
-export function DocumentPreview({ schema, values, colorSet, print }: PreviewProps) {
+export function DocumentPreview({
+  schema,
+  values,
+  colorSet,
+  font,
+  background,
+  styles,
+  print,
+}: PreviewProps) {
   const fields = schema.fields.filter((f) => printable(f, values));
   const role = (f: TemplateField) => f.role ?? "detail";
 
@@ -156,16 +183,25 @@ export function DocumentPreview({ schema, values, colorSet, print }: PreviewProp
   const firstDetail = middle.find((f) => role(f) === "detail");
 
   const page = PAGE_MM[schema.layout.pageSize];
+  const surface: CSSProperties = {
+    ...backgroundCss(background, colorSet),
+    color: colorSet.fg,
+    fontFamily: fontCss(font),
+  };
   const outerStyle: CSSProperties = print
-    ? { width: `${page.w}mm`, height: `${page.h}mm`, background: colorSet.bg, color: colorSet.fg }
-    : { aspectRatio: `${page.w} / ${page.h}`, background: colorSet.bg, color: colorSet.fg };
+    ? { width: `${page.w}mm`, height: `${page.h}mm`, ...surface }
+    : { aspectRatio: `${page.w} / ${page.h}`, ...surface };
 
   const renderField = (f: TemplateField) => {
     const v = rawValue(f, values);
     switch (role(f)) {
       case "body":
         return (
-          <p key={f.key} className="max-w-[92%] whitespace-pre-line text-[0.95rem] leading-relaxed">
+          <p
+            key={f.key}
+            className="max-w-[92%] whitespace-pre-line text-[0.95rem] leading-relaxed"
+            style={sizeStyle(styles, f.key, 0.95)}
+          >
             {f.prefix}
             {v}
           </p>
@@ -178,7 +214,7 @@ export function DocumentPreview({ schema, values, colorSet, print }: PreviewProp
             )}
             <span
               className="text-3xl font-bold leading-snug"
-              style={{ color: colorSet.accent }}
+              style={{ color: colorSet.accent, ...sizeStyle(styles, f.key, 1.875) }}
             >
               {v}
             </span>
@@ -193,7 +229,7 @@ export function DocumentPreview({ schema, values, colorSet, print }: PreviewProp
                 style={{ background: colorSet.accent, opacity: 0.6 }}
               />
             )}
-            <span className="font-medium">
+            <span className="font-medium" style={sizeStyle(styles, f.key, 0.875)}>
               {f.prefix}
               {v}
             </span>
@@ -209,6 +245,7 @@ export function DocumentPreview({ schema, values, colorSet, print }: PreviewProp
         (f.emphasis ? "text-[0.95rem] font-semibold " : "opacity-85 ") +
         "whitespace-pre-line leading-relaxed"
       }
+      style={sizeStyle(styles, f.key, f.emphasis ? 0.95 : 0.875)}
     >
       {f.prefix}
       {rawValue(f, values)}
@@ -250,7 +287,7 @@ export function DocumentPreview({ schema, values, colorSet, print }: PreviewProp
         }
         style={outerStyle}
       >
-        <DocumentVariant schema={schema} values={values} colorSet={colorSet} />
+        <DocumentVariant schema={schema} values={values} colorSet={colorSet} styles={styles} />
       </div>
     );
   }
@@ -272,7 +309,9 @@ export function DocumentPreview({ schema, values, colorSet, print }: PreviewProp
         {/* opening: בס"ד + motto/verse lines */}
         <div className="flex min-h-[1.5em] flex-col items-center gap-1 text-sm opacity-80">
           {opening.map((f) => (
-            <div key={f.key}>{rawValue(f, values)}</div>
+            <div key={f.key} style={sizeStyle(styles, f.key, 0.875)}>
+              {rawValue(f, values)}
+            </div>
           ))}
         </div>
 

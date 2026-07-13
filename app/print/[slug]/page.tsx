@@ -14,6 +14,9 @@ export const metadata = { robots: { index: false, follow: false } };
 interface PrintData {
   values: Record<string, string>;
   colorKey: string;
+  font?: string;
+  background?: string;
+  styles?: Record<string, { sizeDelta?: number }>;
 }
 
 export default async function PrintPage({
@@ -47,6 +50,9 @@ export default async function PrintPage({
         schema={template.schema}
         values={data.values}
         colorSet={colorSet}
+        font={data.font}
+        background={data.background}
+        styles={data.styles}
         print
       />
       {/* draft watermark — removed on the paid path (spec §8) */}

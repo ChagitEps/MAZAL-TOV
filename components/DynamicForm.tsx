@@ -1,6 +1,7 @@
 "use client";
 
 import type { TemplateField, TemplateSchema } from "@/lib/templates/types";
+import { SIZE_MAX, SIZE_MIN, type FieldStyles } from "@/lib/styleOptions";
 import { cn } from "@/lib/utils";
 
 /**
@@ -12,6 +13,9 @@ export interface DynamicFormProps {
   schema: TemplateSchema;
   values: Record<string, string>;
   onChange: (key: string, value: string) => void;
+  /** Per-line size overrides (A+/A- next to each field). */
+  styles?: FieldStyles;
+  onSizeChange?: (key: string, delta: number) => void;
 }
 
 const inputClass =
@@ -79,14 +83,38 @@ function FieldInput({
   }
 }
 
-export function DynamicForm({ schema, values, onChange }: DynamicFormProps) {
+export function DynamicForm({ schema, values, onChange, styles, onSizeChange }: DynamicFormProps) {
   return (
     <form className="flex flex-col gap-4" onSubmit={(e) => e.preventDefault()}>
       {schema.fields.map((field) => (
         <label key={field.key} className="flex flex-col gap-1 text-start">
-          <span className="text-sm font-medium">
-            {field.label}
-            {field.required && <span className="text-red-600"> *</span>}
+          <span className="flex items-center justify-between text-sm font-medium">
+            <span>
+              {field.label}
+              {field.required && <span className="text-red-600"> *</span>}
+            </span>
+            {onSizeChange && (
+              <span className="flex items-center gap-1" aria-label={`גודל הטקסט של ${field.label}`}>
+                <button
+                  type="button"
+                  aria-label="הקטנת טקסט"
+                  disabled={(styles?.[field.key]?.sizeDelta ?? 0) <= SIZE_MIN}
+                  onClick={() => onSizeChange(field.key, -1)}
+                  className="h-6 w-6 rounded border text-xs leading-none text-gray-600 hover:border-brand hover:text-brand disabled:opacity-30"
+                >
+                  א-
+                </button>
+                <button
+                  type="button"
+                  aria-label="הגדלת טקסט"
+                  disabled={(styles?.[field.key]?.sizeDelta ?? 0) >= SIZE_MAX}
+                  onClick={() => onSizeChange(field.key, 1)}
+                  className="h-6 w-6 rounded border text-sm font-bold leading-none text-gray-600 hover:border-brand hover:text-brand disabled:opacity-30"
+                >
+                  א+
+                </button>
+              </span>
+            )}
           </span>
           <FieldInput
             field={field}

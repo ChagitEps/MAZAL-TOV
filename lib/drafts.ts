@@ -11,6 +11,10 @@ export interface Draft {
   templateTitle: string;
   values: Record<string, string>;
   colorKey: string;
+  /** Style choices (lib/styleOptions.ts) — optional, older drafts lack them. */
+  font?: string;
+  background?: string;
+  styles?: Record<string, { sizeDelta?: number }>;
   updatedAt: number; // epoch ms
 }
 
