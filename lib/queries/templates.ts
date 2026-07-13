@@ -13,6 +13,22 @@ import type { Template, TemplateSchema } from "@/lib/templates/types";
  */
 
 const SEED_DIR = path.join(process.cwd(), "supabase", "seed", "templates");
+const THUMB_DIR = path.join(process.cwd(), "public", "templates");
+const THUMB_EXTENSIONS = ["png", "jpg", "jpeg", "webp"];
+
+/** Auto-detect a card image: public/templates/<slug>.(png|jpg|jpeg|webp).
+ *  Dropping a correctly-named file is enough — no JSON wiring needed. */
+async function detectThumbnail(slug: string): Promise<string | null> {
+  for (const ext of THUMB_EXTENSIONS) {
+    try {
+      await fs.access(path.join(THUMB_DIR, `${slug}.${ext}`));
+      return `/templates/${slug}.${ext}`;
+    } catch {
+      // not this extension — keep looking
+    }
+  }
+  return null;
+}
 
 /** Shape of a seed file (snake_case like the DB row it will become). */
 interface SeedTemplate {
@@ -44,7 +60,7 @@ async function loadAll(): Promise<Template[]> {
         slug: raw.slug,
         title: raw.title,
         description: raw.description ?? null,
-        thumbnail: raw.thumbnail ?? null,
+        thumbnail: raw.thumbnail ?? (await detectThumbnail(raw.slug)),
         schema: raw.schema,
         basePriceAgorot: raw.base_price_agorot,
         isActive: true,

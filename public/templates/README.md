@@ -4,18 +4,17 @@
 
 ## איך מוסיפים תמונה לתבנית
 
-1. שומרים את הקובץ בתיקייה זו בשם ה-slug של התבנית, למשל:
-   - `wedding.jpg` — הזמנה לחתונה
-   - `bar-mitzvah.jpg` — הזמנה לבר מצווה
-   - `bat-mitzvah.jpg`, `brit.jpg`, `engagement.jpg`, `pidyon-haben.jpg`,
-     `birthday.jpg`, `welcome-sign.jpg`, `shalom-zachar.jpg`
-2. מוסיפים שורה לקובץ התבנית ב-`supabase/seed/templates/<slug>.json`:
+שומרים את הקובץ בתיקייה זו בשם ה-slug של התבנית — **וזהו, הזיהוי אוטומטי**:
 
-   ```json
-   "thumbnail": "/templates/wedding.jpg",
-   ```
+- `wedding.png` — הזמנה לחתונה
+- `bar-mitzvah.png` — בר מצווה · `bat-mitzvah.png` — בת מצווה
+- `brit.png` — ברית · `shalom-zachar.png` — שלום זכר
+- `engagement.png` — וורט/אירוסין · `pidyon-haben.png` — פדיון הבן
+- `birthday.png` — יום הולדת · `welcome-sign.png` — שלט ברכה
+- `cv.png` — קורות חיים · `cover-letter.png` — מכתב מקדים
 
-3. זהו — הכרטיס יציג את התמונה. תבנית בלי תמונה מקבלת placeholder צבעוני אוטומטי.
+נתמכות סיומות png / jpg / jpeg / webp. תבנית בלי תמונה מקבלת placeholder
+צבעוני אוטומטי. (אפשר גם לקבוע ידנית עם `"thumbnail"` ב-JSON — גובר על הזיהוי.)
 
 ## הנחיות לתמונה
 
