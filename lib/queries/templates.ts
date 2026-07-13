@@ -81,3 +81,43 @@ export async function getTemplateBySlug(slug: string): Promise<Template | null> 
   const all = await loadAll();
   return all.find((t) => t.slug === slug) ?? null;
 }
+
+// ---------------------------------------------------------------------------
+// Background artwork (user request: real images the wording integrates into).
+// Drop a file → it appears as a background option in the editor, zero wiring:
+//   public/backgrounds/<slug>/*   — backgrounds for one template
+//   public/backgrounds/shared/*   — backgrounds offered to every template
+// ---------------------------------------------------------------------------
+
+const BG_DIR = path.join(process.cwd(), "public", "backgrounds");
+const BG_EXTENSIONS = new Set(["png", "jpg", "jpeg", "webp", "svg"]);
+
+export interface BackgroundImage {
+  /** Public URL under /backgrounds/ — also the stored background value. */
+  url: string;
+  /** Display name: the file name without its extension (Hebrew welcome). */
+  label: string;
+}
+
+async function listBackgroundDir(dir: string, urlBase: string): Promise<BackgroundImage[]> {
+  try {
+    const files = await fs.readdir(path.join(BG_DIR, dir));
+    return files
+      .filter((f) => BG_EXTENSIONS.has(f.split(".").pop()?.toLowerCase() ?? ""))
+      .map((f) => ({
+        url: `${urlBase}/${encodeURIComponent(f)}`,
+        label: f.replace(/\.[^.]+$/, ""),
+      }));
+  } catch {
+    return []; // folder doesn't exist — no options from it
+  }
+}
+
+/** Background images offered to a template: its own folder + the shared pool. */
+export async function getBackgroundImages(slug: string): Promise<BackgroundImage[]> {
+  const [own, shared] = await Promise.all([
+    listBackgroundDir(slug, `/backgrounds/${slug}`),
+    listBackgroundDir("shared", "/backgrounds/shared"),
+  ]);
+  return [...own, ...shared];
+}

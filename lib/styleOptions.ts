@@ -35,7 +35,22 @@ export const BACKGROUNDS = [
 
 export type BackgroundKey = (typeof BACKGROUNDS)[number]["key"];
 
+/** A background value may also be artwork the wording integrates into —
+ *  ONLY same-origin paths under /backgrounds/ are accepted (no URL injection). */
+export function isImageBackground(value: string | undefined): boolean {
+  return !!value && value.startsWith("/backgrounds/") && !value.includes("..");
+}
+
 export function backgroundCss(key: string | undefined, cs: ColorSet): CSSProperties {
+  if (isImageBackground(key)) {
+    return {
+      backgroundColor: cs.bg,
+      backgroundImage: `url("${key}")`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+    };
+  }
   switch (key) {
     case "glow":
       return {

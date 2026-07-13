@@ -1,6 +1,10 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getAllTemplates, getTemplateBySlug } from "@/lib/queries/templates";
+import {
+  getAllTemplates,
+  getBackgroundImages,
+  getTemplateBySlug,
+} from "@/lib/queries/templates";
 import { GeneratorClient } from "@/components/GeneratorClient";
 
 // The generator page (spec §3): server loads the template, client renders live.
@@ -34,6 +38,7 @@ export default async function GeneratorPage({
   const { slug } = await params;
   const template = await getTemplateBySlug(slug);
   if (!template) notFound();
+  const backgroundImages = await getBackgroundImages(slug);
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-8">
@@ -46,7 +51,7 @@ export default async function GeneratorPage({
       </nav>
       <h1 className="mt-2 text-2xl font-bold">{template.title}</h1>
       <div className="mt-6">
-        <GeneratorClient template={template} />
+        <GeneratorClient template={template} backgroundImages={backgroundImages} />
       </div>
     </main>
   );

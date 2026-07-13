@@ -11,6 +11,7 @@ import {
   SIZE_MAX,
   SIZE_MIN,
   fontCss,
+  isImageBackground,
   type FieldStyles,
 } from "@/lib/styleOptions";
 import { DynamicForm } from "@/components/DynamicForm";
@@ -23,7 +24,19 @@ import { DocumentPreview } from "@/components/DocumentPreview";
  * size) live here too, persist in the device draft, and travel with the PDF
  * payload so the file matches the preview exactly (spec §12).
  */
-export function GeneratorClient({ template }: { template: Template }) {
+export interface BackgroundImageOption {
+  url: string;
+  label: string;
+}
+
+export function GeneratorClient({
+  template,
+  backgroundImages = [],
+}: {
+  template: Template;
+  /** Artwork backgrounds detected server-side (public/backgrounds/…). */
+  backgroundImages?: BackgroundImageOption[];
+}) {
   // Initialize values from the template's field defaults (spec §4).
   const initialValues = useMemo(() => {
     const v: Record<string, string> = {};
@@ -48,7 +61,11 @@ export function GeneratorClient({ template }: { template: Template }) {
         setColorKey(draft.colorKey);
       }
       if (draft.font && FONTS.some((f) => f.key === draft.font)) setFont(draft.font);
-      if (draft.background && BACKGROUNDS.some((b) => b.key === draft.background)) {
+      if (
+        draft.background &&
+        (BACKGROUNDS.some((b) => b.key === draft.background) ||
+          isImageBackground(draft.background))
+      ) {
         setBackground(draft.background);
       }
       if (draft.spacing && SPACINGS.some((s) => s.key === draft.spacing)) {
@@ -192,6 +209,41 @@ export function GeneratorClient({ template }: { template: Template }) {
                 </button>
               ))}
             </div>
+            {backgroundImages.length > 0 && (
+              <div
+                role="radiogroup"
+                aria-label="רקעי תמונה"
+                className="mt-3 flex flex-wrap gap-2"
+              >
+                {backgroundImages.map((img) => (
+                  <button
+                    key={img.url}
+                    type="button"
+                    role="radio"
+                    aria-checked={background === img.url}
+                    onClick={() => setBackground(img.url)}
+                    title={img.label}
+                    className={
+                      "overflow-hidden rounded-lg border transition " +
+                      (background === img.url
+                        ? "border-brand ring-2 ring-brand"
+                        : "border-gray-300 hover:border-gray-400")
+                    }
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={img.url}
+                      alt={img.label}
+                      className="h-16 w-12 object-cover"
+                      loading="lazy"
+                    />
+                    <span className="block max-w-12 truncate px-1 text-[10px] text-gray-600">
+                      {img.label}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 

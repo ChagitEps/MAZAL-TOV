@@ -4,6 +4,7 @@ import { formatHebrewDate } from "@/lib/hebrewDate";
 import {
   backgroundCss,
   fontCss,
+  isImageBackground,
   scaledRem,
   spacingFactor,
   type FieldStyles,
@@ -327,7 +328,13 @@ export function DocumentPreview({
     >
       <div
         className="flex h-full flex-col items-center justify-between p-[6%] text-center"
-        style={{ border: `1px solid ${colorSet.accent}`, margin: "4%", height: "92%" }}
+        style={{
+          // Artwork backgrounds carry their own framing — the accent border
+          // is drawn only over plain/CSS backgrounds.
+          border: isImageBackground(background) ? "none" : `1px solid ${colorSet.accent}`,
+          margin: "4%",
+          height: "92%",
+        }}
       >
         {/* opening: בס"ד + motto/verse lines */}
         <div
